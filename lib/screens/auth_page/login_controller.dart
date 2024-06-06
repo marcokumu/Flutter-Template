@@ -11,6 +11,7 @@ class LoginController extends GetxController {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+
   // An observable boolean value to track whether a login operation is in progress.
   var isLoading = false.obs;
 

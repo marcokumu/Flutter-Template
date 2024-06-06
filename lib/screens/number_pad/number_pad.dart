@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class NumberPad extends StatelessWidget {
-  final Function(int) onInputNumber;
+  final Function(int) onNumberInput;
   final VoidCallback onClearLastInput;
   final VoidCallback onClearAll;
 
   const NumberPad({
     Key? key,
-    required this.onInputNumber,
+    required this.onNumberInput,
     required this.onClearLastInput,
     required this.onClearAll,
   }) : super(key: key);
 
-  Widget buildNumeralRow(List<int> numbers) {
+  Widget _buildNumeralRow(List<int> numbers) {
     return Expanded(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: numbers
             .map((number) => Expanded(
-                child: Numeral(number: number, onKeyPress: onInputNumber)))
+                  child: NumeralButton(
+                    number: number,
+                    onPressed: () => onNumberInput(number),
+                  ),
+                ))
             .toList(),
       ),
     );
@@ -29,16 +33,19 @@ class NumberPad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildNumeralRow([1, 2, 3]),
-        buildNumeralRow([4, 5, 6]),
-        buildNumeralRow([7, 8, 9]),
+        _buildNumeralRow([1, 2, 3]),
+        _buildNumeralRow([4, 5, 6]),
+        _buildNumeralRow([7, 8, 9]),
         Expanded(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(),
               Expanded(
-                child: Numeral(number: 0, onKeyPress: onInputNumber),
+                child: NumeralButton(
+                  number: 0,
+                  onPressed: () => onNumberInput(0),
+                ),
               ),
               Expanded(
                 child: ClearButton(
@@ -54,25 +61,24 @@ class NumberPad extends StatelessWidget {
   }
 }
 
-class Numeral extends StatelessWidget {
+class NumeralButton extends StatelessWidget {
   final int number;
-  final Function(int) onKeyPress;
+  final VoidCallback onPressed;
 
-  const Numeral({
+  const NumeralButton({
     Key? key,
     required this.number,
-    required this.onKeyPress,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return TextButton(
-      onPressed: () => onKeyPress(number),
+      onPressed: onPressed,
       child: Text(
         '$number',
         style: TextStyle(
-          fontSize: screenWidth * 0.1,
+          fontSize: MediaQuery.of(context).size.width * 0.1,
         ),
       ),
     );
@@ -94,7 +100,6 @@ class ClearButton extends StatelessWidget {
     return IconButton(
       onPressed: onClearLastInput,
       icon: const Icon(MingCute.delete_back_line),
-      // onLongPress: onClearAll,
     );
   }
 }

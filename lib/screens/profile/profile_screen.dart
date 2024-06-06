@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                primary: Colors.deepPurpleAccent[700],
+                backgroundColor: Colors.deepPurpleAccent[700],
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 16,

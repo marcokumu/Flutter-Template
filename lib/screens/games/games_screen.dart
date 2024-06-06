@@ -53,7 +53,7 @@ class GamesScreen extends StatelessWidget {
               SizedBox(
                 height: screenHeight * 0.6,
                 child: NumberPad(
-                  onInputNumber: inputNumber,
+                  onNumberInput: inputNumber,
                   onClearLastInput: clearLastInput,
                   onClearAll: clearAll,
                 ),
